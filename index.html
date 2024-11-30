@@ -1,224 +1,1030 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
 
+
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全球id永久更新 小火箭id在最下方</title>
+
+    <title>全球ID实时更新</title>
+
     <style>
+
         body {
+
             font-family: Arial, sans-serif;
+
             background-color: #f0f0f0;
+
             margin: 0;
+
             padding: 0;
+
         }
+
+
 
         h1 {
+
             text-align: center;
+
             background-color: #4CAF50;
+
             color: white;
+
             padding: 20px;
+
             margin: 0;
+
         }
+
+
 
         section {
+
             padding: 20px;
+
             margin: 20px;
+
             background-color: white;
+
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
         }
+
+
 
         iframe {
+
             width: 100%;
+
             max-width: 350px;
+
             height: 225px;
+
             border: 1px solid #ddd;
+
             margin: 10px 0;
+
             display: block;
+
             margin-left: auto;
+
             margin-right: auto;
+
         }
 
-        /* 去掉底部容器的外部框架，只保留内容 */
-        .bottom-content {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            text-align: center;
-            border-top: 2px solid #ddd;
+
+
+        video {
+
+            width: 100%;
+
+            height: auto;
+
+            max-width: 100%;
+
+            margin-bottom: 20px;
+
         }
+
+
+
+        .bottom-content {
+
+            margin-top: 40px;
+
+            padding: 20px;
+
+            background-color: #f9f9f9;
+
+            text-align: center;
+
+            border-top: 2px solid #ddd;
+
+        }
+
+
 
         .bottom-content .title {
+
             font-size: 18px;
+
             color: #333;
+
             margin-bottom: 10px;
+
         }
 
-        /* 设置object标签直接展示内容，无外框 */
+
+
         object {
+
             width: 100%;
-            height: 100vh;  /* 高度占满屏幕 */
-            max-width: 100%;  /* 不超过页面宽度 */
-            border: none;  /* 去掉object的边框 */
+
+            height: 100vh;
+
+            max-width: 100%;
+
+            border: none;
+
         }
 
-        /* 可能需要为 swiper 组件添加样式 */
-        .swiper-container {
-            width: 100%;
-            height: 300px;
-            background-color: #f0f0f0;
+
+
+        .content-container {
+
+            display: none;
+
         }
+
+
+
+        .password-container {
+
+            text-align: center;
+
+            margin-top: 50px;
+
+        }
+
+
+
+        .password-container input {
+
+            font-size: 16px;
+
+            padding: 10px;
+
+            width: 300px;
+
+            margin: 10px 0;
+
+            border: 1px solid #ccc;
+
+        }
+
+
+
+        .password-container button {
+
+            font-size: 16px;
+
+            padding: 10px 20px;
+
+            background-color: #4CAF50;
+
+            color: white;
+
+            border: none;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .password-container button:hover {
+
+            background-color: #45a049;
+
+        }
+
+
+
+        /* 管理员登录框的初始隐藏 */
+
+        .admin-container {
+
+            position: fixed;
+
+            top: 20px;
+
+            right: 20px;
+
+            background-color: rgba(0, 0, 0, 0.7);
+
+            padding: 20px;
+
+            color: white;
+
+            border-radius: 8px;
+
+            z-index: 1000;
+
+            display: none; /* 隐藏管理员框 */
+
+        }
+
+
+
+        .admin-container input {
+
+            font-size: 16px;
+
+            padding: 10px;
+
+            width: 200px;
+
+            margin: 10px 0;
+
+            border: 1px solid #ccc;
+
+        }
+
+
+
+        .admin-container button {
+
+            font-size: 16px;
+
+            padding: 10px 20px;
+
+            background-color: #ff6347;
+
+            color: white;
+
+            border: none;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .admin-container button:hover {
+
+            background-color: #f44336;
+
+        }
+
+
+
+        .password-management {
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+            background-color: #f9f9f9;
+
+            text-align: center;
+
+        }
+
+
+
+        .password-management table {
+
+            width: 100%;
+
+            margin-top: 20px;
+
+            border-collapse: collapse;
+
+        }
+
+
+
+        .password-management table th, .password-management table td {
+
+            padding: 10px;
+
+            text-align: center;
+
+            border: 1px solid #ddd;
+
+        }
+
+
+
+        .password-management input[type="text"] {
+
+            font-size: 16px;
+
+            padding: 10px;
+
+            margin: 10px 0;
+
+        }
+
+
+
+        .password-management button {
+
+            font-size: 16px;
+
+            padding: 10px 20px;
+
+            background-color: #4CAF50;
+
+            color: white;
+
+            border: none;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .password-management button:hover {
+
+            background-color: #45a049;
+
+        }
+
+
+
+        /* 小图标的样式 */
+
+        .admin-toggle {
+
+            position: fixed;
+
+            bottom: 20px;
+
+            right: 20px;
+
+            background-color: #ff6347;
+
+            color: white;
+
+            border-radius: 50%;
+
+            padding: 10px;
+
+            cursor: pointer;
+
+            font-size: 24px;
+
+            z-index: 1000;
+
+        }
+
+
+
+        .refresh-button {
+
+            font-size: 16px;
+
+            padding: 10px 20px;
+
+            background-color: #008CBA;
+
+            color: white;
+
+            border: none;
+
+            cursor: pointer;
+
+            display: block;
+
+            margin: 20px auto;
+
+        }
+
+
+
+        .refresh-button:hover {
+
+            background-color: #007B9A;
+
+        }
+
     </style>
+
+</head>
+
+
+
+<body>
+
+        <h1>全球ID实时更新</h1>
+
+
+
+    <!-- 密码输入容器 -->
+
+    <div class="password-container">
+
+        <p>请输入 18 位解锁授权密码：</p>
+
+        <input type="text" id="password" placeholder="请输入密码" maxlength="18">
+
+        <button onclick="unlockContent()">授权获取</button>
+
+    </div>
+
+
+
+    <!-- 管理员登录框 -->
+
+    <div class="admin-container" id="admin-container">
+
+        <p>管理员登录：</p>
+
+        <input type="password" id="admin-password" placeholder="请输入管理员密码" maxlength="18">
+
+        <button onclick="adminLogin()">管理员登录</button>
+
+    </div>
+
+
+
+    <!-- 管理员功能：密码管理 -->
+
+    <div class="password-management" id="password-management" style="display: none;">
+
+        <h2>密码管理</h2>
+
+        <p>当前有效的密码列表：</p>
+
+        <table id="password-list">
+
+            <!-- 动态填充密码列表 -->
+
+        </table>
+
+        <input type="text" id="new-password" placeholder="请输入新密码" maxlength="18">
+
+        <button onclick="addPassword()">添加密码</button>
+
+        <button onclick="removePassword()">删除密码</button>
+
+    </div>
+
+
+
+    <!-- 内容容器 -->
+
+    <div class="content-container" id="content">
+
+        <!-- 嵌入视频 -->
+
+        <section>
+
+            <video controls>
+
+                <source src="https://src.xiguajiasu.shop/jc/jc001.mp4" type="video/mp4">
+
+                您的浏览器不支持 video 标签。
+
+            </video>
+
+        </section>
+
+
+
+        <!-- 账号展示部分 -->
+
+        <section>
+
+            <button class="refresh-button" onclick="refreshIframes()">点击刷新重新获取账号状态</button>
+
+        </section>
+
+
+
+        <!-- 账号展示 -->
+
+        <section>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="description" content="多个 iframe 示例">
+
+    <meta name="keywords" content="iframe, 网格布局, 47个iframe">
+
+    <title>请在AppStore登录，禁止登录设置，误登后果自负</title>
+
+    <style>
+
+        /* 背景样式 */
+
+        body {
+
+            background-color: #ffffff; /* 设置背景为白色 */
+
+            color: #333333; /* 文字颜色为深灰色 */
+
+            font-family: 'Arial', sans-serif;
+
+            margin: 0;
+
+            padding: 0;
+
+        }
+
+
+
+        /* 页面头部 */
+
+        h1 {
+
+            text-align: center;
+
+            padding: 20px;
+
+            font-size: 36px;
+
+            color: #00e6e6;
+
+            text-shadow: 2px 2px 10px rgba(0, 230, 230, 0.6);
+
+            margin-top: 20px;
+
+        }
+
+
+
+        /* 网格布局容器 */
+
+        .container {
+
+            display: grid;
+
+            grid-template-columns: repeat(7, 1fr); /* 每行 7 个 iframe */
+
+            grid-gap: 20px; /* iframe 之间的间距 */
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+        }
+
+
+
+        /* 每个 iframe 的样式 */
+
+        iframe {
+
+            width: 100%;
+
+            height: 250px;  /* 高度设置为原来高度的80% */
+
+            border: 2px solid #00e6e6;  /* 边框颜色，科技感的亮蓝色 */
+
+            border-radius: 10px; /* 圆角边框 */
+
+            box-shadow: 0 4px 10px rgba(0, 230, 230, 0.5); /* 阴影效果 */
+
+            overflow: hidden; /* 禁止滚动条 */
+
+            pointer-events: auto; /* 允许点击 */
+
+            display: block; /* 防止 iframe 弹出滚动条 */
+
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* 鼠标悬停效果 */
+
+        }
+
+
+
+        /* 鼠标悬停效果 */
+
+        iframe:hover {
+
+            transform: scale(1.05); /* 放大效果 */
+
+            box-shadow: 0 8px 15px rgba(0, 230, 230, 0.7); /* 更强的阴影效果 */
+
+        }
+
+
+
+        /* 为了适应不同大小的屏幕，使用响应式布局 */
+
+        @media (max-width: 1200px) {
+
+            .container {
+
+                grid-template-columns: repeat(6, 1fr); /* 屏幕小于 1200px时每行显示 6 个 iframe */
+
+            }
+
+        }
+
+
+
+        @media (max-width: 900px) {
+
+            .container {
+
+                grid-template-columns: repeat(4, 1fr); /* 屏幕小于 900px时每行显示 4 个 iframe */
+
+            }
+
+        }
+
+
+
+        @media (max-width: 600px) {
+
+            .container {
+
+                grid-template-columns: repeat(2, 1fr); /* 屏幕小于 600px时每行显示 2 个 iframe */
+
+            }
+
+        }
+
+
+
+        /* 容器样式 */
+
+        .category-america {
+
+            margin-top: 50px;
+
+            padding: 20px;
+
+            background-color: rgba(0, 30, 30, 0.7);
+
+            border-radius: 10px;
+
+            box-shadow: 0 5px 15px rgba(0, 230, 230, 0.3);
+
+        }
+
+
+
+        .category-america h2 {
+
+            text-align: center;
+
+            font-size: 28px;
+
+            color: #00e6e6;
+
+        }
+
+
+
+        /* 适应容器内的小容器 */
+
+        .america-container {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            grid-gap: 20px;
+
+            margin-top: 20px;
+
+        }
+
+
+
+        /* 为容器内的 iframe 设置额外的样式 */
+
+        .america-container iframe {
+
+            width: 100%;
+
+            height: 200px;
+
+            border-radius: 8px;
+
+        }
+
+
+
+    </style>
+
 </head>
 
 <body>
 
-    <h1>全球id永久更新 格式为{号-地区}</h1>
+    <h1>请在AppStore登录，禁止登录设置，误登后果自负</h1>
 
-    <section>
-        <h2>🚩账号1</h2>
-        <iframe src="https://id.ali-door.top/share/wfYxkycHAp" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
 
-    <section>
-        <h2>🚩账号2</h2>
-        <iframe src="https://id.ali-door.top/share/QJTYIrfpXk" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
 
-    <section>
-        <h2>🚩账号3</h2>
-        <iframe src="https://id.ali-door.top/share/OZWEjQAGca" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
+    <!-- 分类: 美国 -->
 
-    <section>
-        <h2>🚩账号4</h2>
-        <iframe src="https://id.ali-door.top/share/enzCmThQoH" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
+    <div class="category-america">
 
-    <section>
-        <h2>🚩账号5</h2>
-        <iframe src="https://id.ali-door.top/share/NQjIlisVdg" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
+        <h2>24小时自动更新解锁/含已购小火箭</h2>
 
-    <section>
-        <h2>🚩账号6</h2>
-        <iframe src="https://id.ali-door.top/share/tBNYyQTbad" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
+        <div class="america-container">
 
-    <section>
-        <h2>🚩账号7</h2>
-        <iframe src="https://id.ali-door.top/share/gTvBJzfYhj" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
+            <!-- 这里将动态插入包含 "美国" 的 iframe -->
 
-    <section>
-        <h2>🚩账号8</h2>
-        <iframe src="https://id.ali-door.top/share/nGEsOvaYRC" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
+        </div>
 
-    <section>
-        <h2>🚩账号9</h2>
-        <iframe src="https://id.ali-door.top/share/dIKnZhWtop" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
-
-    <section>
-        <h2>🚩账号10</h2>
-        <iframe src="https://id.ali-door.top/share/QSNmUhfwsY" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
-
-    <section>
-        <h2>🚩账号11</h2>
-        <iframe src="https://id.ali-door.top/share/rXKIiUcauR" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
-
-    <section>
-        <h2>🚩账号12</h2>
-        <iframe src="https://id.ali-door.top/share/mNabGwJvsr" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
-
-    <section>
-        <h2>🚩账号13</h2>
-        <iframe src="https://id.ali-door.top/share/mIWSRipwPe" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
-
-    <section>
-        <h2>🚩账号14</h2>
-        <iframe src="https://id.ali-door.top/share/QYCHacmpqT" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
-
-    <section>
-        <h2>🚩账号15</h2>
-        <iframe src="https://id.ali-door.top/share/MGwBmeYRiP" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
-        </iframe>
-    </section>
-
-    <!-- 直接嵌入链接内容 -->
-    <div class="bottom-content">
-        <div class="title">下载小火箭👇id公用账号信息</div>
-        <object data="https://a2gzr.sha.cx/19f11b5a4981158d92b252f64ac02826" width="100%" height="100vh"></object>
     </div>
 
-    <script type="text/javascript" src="js/swiper.min.js"></script>
+
+
+    <!-- 分类: 其他内容 -->
+
+    <div class="container" id="iframe-container">
+
+        <!-- 在每个 iframe 中设置不同的 URL -->
+
+        <iframe src="https://wwww.beijicloud.blog/page1" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page2" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page3" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page4" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page5" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page6" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page7" scrolling="no"></iframe>
+
+
+
+        <iframe src="https://wwww.beijicloud.blog/page8" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page9" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page10" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page11" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page12" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page13" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page14" scrolling="no"></iframe>
+
+
+
+        <iframe src="https://wwww.beijicloud.blog/page15" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page16" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page17" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page18" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page19" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page20" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page21" scrolling="no"></iframe>
+
+
+
+        <iframe src="https://wwww.beijicloud.blog/page22" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page23" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page24" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page25" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page26" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page27" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page28" scrolling="no"></iframe>
+
+
+
+        <iframe src="https://wwww.beijicloud.blog/page29" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page30" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page31" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page32" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page33" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page34" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page35" scrolling="no"></iframe>
+
+
+
+        <iframe src="https://wwww.beijicloud.blog/page36" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page37" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page38" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page39" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page40" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page41" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page42" scrolling="no"></iframe>
+
+
+
+        <iframe src="https://wwww.beijicloud.blog/page43" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page44" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page45" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page46" scrolling="no"></iframe>
+
+        <iframe src="https://wwww.beijicloud.blog/page47" scrolling="no"></iframe>
+
+    </div>	
+
+
+
+    <!-- 管理员图标 -->
+
+    <div class="admin-toggle" onclick="toggleAdmin()">⚙️</div>
+
+
+
     <script type="text/javascript">
-        var mySwiper = new Swiper('.swiper-container', {
-            speed: 300,
-            slidesPerView: '1',
-            loop: true,
-            autoplay: {
-                delay: 30000,
-                disableOnInteraction: false,
-            },
-            // 添加页面样式
-            pagination: {
-                el: '.swiper-pagination', // 要识别为页面字符的类
-                clickable: true, // 单击“页面”按钮后移动
-                type: 'bullets', // 形状类型
+
+        // 密码列表初始化，优先从本地存储加载
+
+        let validPasswords = JSON.parse(localStorage.getItem('validPasswords')) || [
+
+            "123456789012345678",
+
+            "234567890123456789",
+
+            "345678901234567890"
+
+        ];
+
+
+
+        // 切换显示管理员登录框
+
+        function toggleAdmin() {
+
+            const adminContainer = document.getElementById('admin-container');
+
+            adminContainer.style.display = (adminContainer.style.display === 'none' || adminContainer.style.display === '') ? 'block' : 'none';
+
+        }
+
+
+
+        // 解锁内容
+
+        function unlockContent() {
+
+            const passwordInput = document.getElementById('password').value;
+
+            const contentContainer = document.getElementById('content');
+
+            if (validPasswords.includes(passwordInput)) {
+
+                contentContainer.style.display = 'block'; // 显示内容
+
+            } else {
+
+                alert('密码错误');
+
             }
-        })
+
+        }
+
+
+
+        // 管理员登录
+
+        function adminLogin() {
+
+            const adminPassword = document.getElementById('admin-password').value;
+
+            if (adminPassword === 'li123456') {
+
+                document.getElementById('password-management').style.display = 'block'; // 显示密码管理
+
+                document.getElementById('admin-container').style.display = 'none'; // 隐藏管理员登录框
+
+            } else {
+
+                alert('管理员密码错误');
+
+            }
+
+        }
+
+
+
+        // 添加密码
+
+        function addPassword() {
+
+            const newPassword = document.getElementById('new-password').value;
+
+            if (newPassword && !validPasswords.includes(newPassword)) {
+
+                validPasswords.push(newPassword);
+
+                localStorage.setItem('validPasswords', JSON.stringify(validPasswords)); // 更新本地存储
+
+                alert('密码已添加');
+
+                updatePasswordList(); // 更新密码列表
+
+            }
+
+        }
+
+
+
+        // 删除密码
+
+        function removePassword() {
+
+            const password = document.getElementById('new-password').value;
+
+            const index = validPasswords.indexOf(password);
+
+            if (index !== -1) {
+
+                validPasswords.splice(index, 1);
+
+                localStorage.setItem('validPasswords', JSON.stringify(validPasswords)); // 更新本地存储
+
+                alert('密码已删除');
+
+                updatePasswordList(); // 更新密码列表
+
+            }
+
+        }
+
+
+
+        // 更新密码列表
+
+        function updatePasswordList() {
+
+            const table = document.getElementById('password-list');
+
+            table.innerHTML = ''; // 清空当前列表
+
+            validPasswords.forEach(password => {
+
+                const row = document.createElement('tr');
+
+                const cell = document.createElement('td');
+
+                cell.textContent = password;
+
+                row.appendChild(cell);
+
+                table.appendChild(row);
+
+            });
+
+        }
+
+
+
+        // 页面加载时更新密码列表
+
+        window.onload = function() {
+
+            updatePasswordList();
+
+        };
+
+        
+
+        // 刷新iframe内容
+
+        function refreshIframes() {
+
+            const iframes = document.querySelectorAll('iframe');
+
+            iframes.forEach(iframe => {
+
+                iframe.src = iframe.src; // 刷新iframe
+
+            });
+
+        }
+
     </script>
+
+
+
 </body>
 
+
+
 </html>
+
